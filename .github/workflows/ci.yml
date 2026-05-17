@@ -1,0 +1,61 @@
+name: ci
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches:
+    - main
+
+jobs:
+  code-check:
+    name: code-check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build: [linux, macos, win-msvc]
+        include:
+        - build: linux
+          os: ubuntu-latest
+        - build: macos
+          os: macos-latest
+        - build: win-msvc
+          os: windows-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        persist-credentials: false
+
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@b3b07ba8b418998c39fb20f53e8b695cdcc8de1b # v1
+      with:
+        toolchain: stable
+
+    - name: Run cargo check
+      run: cargo check
+
+  code-style:
+    name: code-style
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        persist-credentials: false
+
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@b3b07ba8b418998c39fb20f53e8b695cdcc8de1b # v1
+      with:
+        toolchain: 1.87.0
+        components: rustfmt, clippy
+
+    - name: Check formatting
+      run: cargo fmt -- --check
+
+    - name: Check clippy lints
+      run: cargo clippy -- -D warnings
