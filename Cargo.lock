@@ -95,7 +95,6 @@ dependencies = [
  "weakauras-codec-ace-serialize",
  "weakauras-codec-base64",
  "weakauras-codec-lib-compress",
- "weakauras-codec-lib-serialize",
  "weakauras-codec-lua-value",
 ]
 
@@ -288,15 +287,6 @@ name = "weakauras-codec-lib-compress"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c8ca1757496e067e743d63529b3bbf5e767f5177dc8aee229a9a9fe77d522c2c"
-
-[[package]]
-name = "weakauras-codec-lib-serialize"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "23a82442d6133e298c7b252024ba36fb3f8e54d0d0fde7d1bacba53cac128fb4"
-dependencies = [
- "weakauras-codec-lua-value",
-]
 
 [[package]]
 name = "weakauras-codec-lua-value"
